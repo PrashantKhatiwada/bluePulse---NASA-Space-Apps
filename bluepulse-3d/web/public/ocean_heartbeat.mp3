@@ -1,0 +1,16 @@
+# Ocean Heartbeat Audio Placeholder
+
+This file serves as a placeholder for the ocean heartbeat audio file.
+
+To add the actual audio:
+1. Download or create a short looping ocean heartbeat sound (MP3 format)
+2. Rename it to `ocean_heartbeat.mp3`
+3. Place it in the `public/` directory
+4. The audio will automatically play in the background
+
+The audio should be:
+- Short (10-30 seconds)
+- Looping
+- Subtle ambient sound
+- Ocean-themed (waves, heartbeat, etc.)
+- Low volume to not interfere with the experience

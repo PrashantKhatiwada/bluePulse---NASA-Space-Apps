@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "title": "Global Sea Level Rise Data",
+    "description": "Current sea level data and projections for climate awareness",
+    "currentYear": 2024,
+    "baseYear": 2000,
+    "currentGlobalTemp": 14.8,
+    "seaLevelRiseRate": 3.3,
+    "unit": "mm/year"
+  },
+  "locations": [
+    {
+      "id": "miami",
+      "name": "Miami, Florida",
+      "coordinates": {
+        "longitude": -80.1918,
+        "latitude": 25.7617
+      },
+      "currentSeaLevel": 0.0,
+      "seaLevelRise": 3.2,
+      "vulnerability": "high",
+      "population": 470914,
+      "description": "One of the most vulnerable cities to sea level rise"
+    },
+    {
+      "id": "venice",
+      "name": "Venice, Italy",
+      "coordinates": {
+        "longitude": 12.3155,
+        "latitude": 45.4408
+      },
+      "currentSeaLevel": 0.0,
+      "seaLevelRise": 2.8,
+      "vulnerability": "extreme",
+      "population": 261905,
+      "description": "Already experiencing frequent flooding"
+    },
+    {
+      "id": "bangladesh",
+      "name": "Dhaka, Bangladesh",
+      "coordinates": {
+        "longitude": 90.4125,
+        "latitude": 23.8103
+      },
+      "currentSeaLevel": 0.0,
+      "seaLevelRise": 4.1,
+      "vulnerability": "extreme",
+      "population": 21000000,
+      "description": "Low-lying delta region at extreme risk"
+    },
+    {
+      "id": "maldives",
+      "name": "Malé, Maldives",
+      "coordinates": {
+        "longitude": 73.5361,
+        "latitude": 4.1755
+      },
+      "currentSeaLevel": 0.0,
+      "seaLevelRise": 3.7,
+      "vulnerability": "extreme",
+      "population": 133412,
+      "description": "Average elevation only 1.5m above sea level"
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokyo, Japan",
+      "coordinates": {
+        "longitude": 139.6917,
+        "latitude": 35.6895
+      },
+      "currentSeaLevel": 0.0,
+      "seaLevelRise": 2.9,
+      "vulnerability": "high",
+      "population": 14000000,
+      "description": "Densely populated coastal megacity"
+    },
+    {
+      "id": "netherlands",
+      "name": "Amsterdam, Netherlands",
+      "coordinates": {
+        "longitude": 4.9041,
+        "latitude": 52.3676
+      },
+      "currentSeaLevel": 0.0,
+      "seaLevelRise": 2.5,
+      "vulnerability": "high",
+      "population": 872680,
+      "description": "Much of the country below sea level"
+    }
+  ],
+  "projections": {
+    "scenarios": [
+      {
+        "name": "Current Rate",
+        "description": "If current trends continue",
+        "tempIncrease": 0.0,
+        "seaLevelRiseMultiplier": 1.0
+      },
+      {
+        "name": "+1°C",
+        "description": "1°C global temperature increase",
+        "tempIncrease": 1.0,
+        "seaLevelRiseMultiplier": 1.5
+      },
+      {
+        "name": "+2°C",
+        "description": "2°C global temperature increase",
+        "tempIncrease": 2.0,
+        "seaLevelRiseMultiplier": 2.2
+      },
+      {
+        "name": "+3°C",
+        "description": "3°C global temperature increase",
+        "tempIncrease": 3.0,
+        "seaLevelRiseMultiplier": 3.5
+      },
+      {
+        "name": "+4°C",
+        "description": "4°C global temperature increase",
+        "tempIncrease": 4.0,
+        "seaLevelRiseMultiplier": 5.0
+      }
+    ]
+  },
+  "timeline": {
+    "years": [2024, 2030, 2035, 2040, 2045, 2050, 2055, 2060, 2065, 2070, 2075, 2080, 2085, 2090, 2095, 2100],
+    "currentRate": {
+      "seaLevelRise": [0, 20, 33, 46, 59, 72, 85, 98, 111, 124, 137, 150, 163, 176, 189, 202]
+    }
+  }
+}
