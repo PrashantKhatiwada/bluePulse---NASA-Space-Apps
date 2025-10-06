@@ -5,6 +5,8 @@ import Globe from "./Globe";
 import Atmosphere from "./Atmosphere";
 import DataDots from "./DataDots";
 import SeaLevelMarkers from "./SeaLevelMarkers";
+import SeaLevelRise from "./SeaLevelRise";
+import FloodVisualization from "./FloodVisualization";
 import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
 import { useCamStore } from "@/lib/store";
@@ -16,7 +18,11 @@ function RotatingEarth({
   seaLevelData, 
   selectedScenario, 
   selectedYear, 
-  onLocationClick 
+  onLocationClick,
+  showSeaLevelDots,
+  showChlorophyllDots,
+  showFloodVisualization,
+  playing
 }: { 
   data: any; 
   tIndex: number;
@@ -24,6 +30,11 @@ function RotatingEarth({
   selectedScenario: number;
   selectedYear: number;
   onLocationClick: (location: any) => void;
+  showSeaLevelDots: boolean;
+  showChlorophyllDots: boolean;
+  showFloodVisualization: boolean;
+  showFloodVisualization: boolean;
+  playing: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const [isRotating, setIsRotating] = useState(true);
@@ -52,15 +63,31 @@ function RotatingEarth({
     <group ref={groupRef}>
       <Globe radius={1} rotationSpeed={0} />
       <Atmosphere />
-      {data && <DataDots data={data} tIndex={tIndex} />}
-      {seaLevelData && (
-        <SeaLevelMarkers
-          data={seaLevelData}
-          selectedScenario={selectedScenario}
-          selectedYear={selectedYear}
-          onLocationClick={onLocationClick}
-        />
-      )}
+          {data && showChlorophyllDots && <DataDots data={data} tIndex={tIndex} />}
+          {seaLevelData && showSeaLevelDots && (
+            <SeaLevelMarkers
+              data={seaLevelData}
+              selectedScenario={selectedScenario}
+              selectedYear={selectedYear}
+              onLocationClick={onLocationClick}
+            />
+          )}
+          {seaLevelData && (
+            <>
+              <SeaLevelRise
+                data={seaLevelData}
+                selectedScenario={selectedScenario}
+                selectedYear={selectedYear}
+                isPlaying={playing}
+              />
+              {showFloodVisualization && (
+                <FloodVisualization
+                  seaLevelRise={seaLevelData.timeline.currentRate.seaLevelRise[seaLevelData.timeline.years.indexOf(selectedYear)] * seaLevelData.projections.scenarios[selectedScenario].seaLevelRiseMultiplier}
+                  isPlaying={playing}
+                />
+              )}
+            </>
+          )}
     </group>
   );
 }
@@ -133,6 +160,10 @@ export default function GlobeCanvas({
   selectedScenario,
   selectedYear,
   onLocationClick,
+  showSeaLevelDots,
+  showChlorophyllDots,
+  showFloodVisualization,
+  playing,
 }: {
   data: any;
   tIndex: number;
@@ -140,6 +171,11 @@ export default function GlobeCanvas({
   selectedScenario: number;
   selectedYear: number;
   onLocationClick: (location: any) => void;
+  showSeaLevelDots: boolean;
+  showChlorophyllDots: boolean;
+  showFloodVisualization: boolean;
+  showFloodVisualization: boolean;
+  playing: boolean;
 }) {
   return (
     <Canvas camera={{ position: [0, 0, 3.1], fov: 42 }} dpr={[1, 2]}>
@@ -152,6 +188,11 @@ export default function GlobeCanvas({
         selectedScenario={selectedScenario}
         selectedYear={selectedYear}
         onLocationClick={onLocationClick}
+        showSeaLevelDots={showSeaLevelDots}
+        showChlorophyllDots={showChlorophyllDots}
+        showFloodVisualization={showFloodVisualization}
+        showFloodVisualization={showFloodVisualization}
+        playing={playing}
       />
       <Stars radius={100} depth={50} factor={2} fade speed={0.6} />
       <CameraTweener />

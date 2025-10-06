@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 interface SeaLevelData {
   metadata: {
@@ -58,6 +58,7 @@ export default function ClimateControlPanel({
   setPlaying,
 }: ClimateControlPanelProps) {
   const [showProjections, setShowProjections] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (!data) {
     return (
@@ -71,22 +72,62 @@ export default function ClimateControlPanel({
 
   const currentScenario = data.projections.scenarios[selectedScenario];
   const yearIndex = data.timeline.years.indexOf(selectedYear);
-  const projectedRise = yearIndex >= 0 ? 
-    data.timeline.currentRate.seaLevelRise[yearIndex] * currentScenario.seaLevelRiseMultiplier : 0;
+  const projectedRise = yearIndex >= 0 ? data.timeline.currentRate.seaLevelRise[yearIndex] * currentScenario.seaLevelRiseMultiplier : 0;
 
   return (
-    <div className="climate-panel">
-      <div className="panel-header">
-        <h2 style={{ color: "#00d4ff", margin: 0, fontSize: "18px", fontWeight: "bold" }}>
-          🌍 Climate Impact Simulator
-        </h2>
-        <p style={{ color: "#ccc", margin: "5px 0", fontSize: "12px" }}>
-          Interactive sea level rise projections
-        </p>
+    <div style={{
+      position: "fixed",
+      top: "20px",
+      left: "20px",
+      width: "280px",
+      maxHeight: "calc(100vh - 40px)",
+      background: "rgba(0, 0, 0, 0.9)",
+      border: "1px solid rgba(255, 255, 255, 0.1)",
+      borderRadius: "12px",
+      backdropFilter: "blur(15px)",
+      zIndex: 1000,
+      overflow: "hidden",
+      transition: "all 0.3s ease",
+      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)"
+    }}>
+      {/* Collapsible Header */}
+      <div 
+        onClick={() => setIsExpanded(!isExpanded)}
+        style={{
+          padding: "12px 15px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          background: "rgba(0, 212, 255, 0.1)",
+          borderBottom: isExpanded ? "1px solid rgba(255, 255, 255, 0.1)" : "none"
+        }}
+      >
+        <div>
+          <h2 style={{ color: "#00d4ff", margin: 0, fontSize: "16px", fontWeight: "bold" }}>
+            🛰️ Climate Simulator
+          </h2>
+          <p style={{ color: "#ccc", margin: "2px 0 0 0", fontSize: "10px" }}>
+            NASA JPL • {selectedYear} • +{selectedScenario}°C
+          </p>
+        </div>
+        <div style={{ fontSize: 16, transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease" }}>
+          ▼
+        </div>
       </div>
 
+      {/* Collapsible Content */}
+      {isExpanded && (
+          <div style={{ padding: "15px", maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}>
+
       {/* Current Global Temperature */}
-      <div className="temperature-display">
+      <div style={{
+        background: "rgba(255, 107, 107, 0.1)",
+        border: "1px solid rgba(255, 107, 107, 0.3)",
+        borderRadius: "6px",
+        padding: "8px",
+        marginBottom: "15px"
+      }}>
         <div style={{ color: "#ff6b6b", fontSize: "14px", fontWeight: "bold" }}>
           Current Global Temperature: {data.metadata.currentGlobalTemp}°C
         </div>
@@ -96,7 +137,7 @@ export default function ClimateControlPanel({
       </div>
 
       {/* Scenario Selection */}
-      <div className="scenario-controls">
+      <div style={{ marginBottom: "15px" }}>
         <label style={{ color: "white", fontSize: "12px", marginBottom: "8px", display: "block" }}>
           Temperature Scenario:
         </label>
@@ -122,7 +163,7 @@ export default function ClimateControlPanel({
       </div>
 
       {/* Year Selection */}
-      <div className="year-controls">
+      <div style={{ marginBottom: "15px" }}>
         <label style={{ color: "white", fontSize: "12px", marginBottom: "8px", display: "block" }}>
           Projection Year: {selectedYear}
         </label>
@@ -141,7 +182,13 @@ export default function ClimateControlPanel({
       </div>
 
       {/* Projection Display */}
-      <div className="projection-display">
+      <div style={{
+        background: "rgba(0, 212, 255, 0.1)",
+        border: "1px solid rgba(0, 212, 255, 0.3)",
+        borderRadius: "6px",
+        padding: "8px",
+        marginBottom: "15px"
+      }}>
         <div style={{ color: "#00d4ff", fontSize: "14px", fontWeight: "bold" }}>
           Projected Sea Level Rise: {projectedRise.toFixed(1)} mm
         </div>
@@ -155,7 +202,12 @@ export default function ClimateControlPanel({
 
       {/* Location Information */}
       {selectedLocation && (
-        <div className="location-info">
+        <div style={{
+          background: "rgba(255, 255, 255, 0.05)",
+          borderRadius: "6px",
+          padding: "10px",
+          marginBottom: "15px"
+        }}>
           <h3 style={{ color: "#00d4ff", fontSize: "14px", margin: "10px 0 5px 0" }}>
             {selectedLocation.name}
           </h3>
@@ -173,7 +225,7 @@ export default function ClimateControlPanel({
       )}
 
       {/* Control Buttons */}
-      <div className="control-buttons">
+      <div style={{ display: "flex", gap: "8px", marginBottom: "15px" }}>
         <button
           onClick={() => setPlaying(!playing)}
           style={{
@@ -203,12 +255,33 @@ export default function ClimateControlPanel({
             cursor: "pointer"
           }}
         >
-          📊 Projections
+          📊 {showProjections ? "Hide" : "Show"} Projections
         </button>
       </div>
 
+      {/* Projection Details - Only show when projections are enabled */}
+      {showProjections && (
+        <div style={{
+          background: "rgba(255, 170, 68, 0.1)",
+          border: "1px solid rgba(255, 170, 68, 0.3)",
+          borderRadius: "6px",
+          padding: "8px",
+          marginBottom: "15px"
+        }}>
+          <div style={{ fontSize: 12, opacity: 0.85, marginBottom: 6 }}>
+            📈 Projection Details
+          </div>
+          <div style={{ color: "#ccc", fontSize: 11, lineHeight: "1.4" }}>
+            <div>Current Year: {selectedYear}</div>
+            <div>Scenario: {currentScenario.name}</div>
+            <div>Projected Rise: {projectedRise.toFixed(1)} mm</div>
+            <div>Rate Multiplier: {currentScenario.seaLevelRiseMultiplier}x</div>
+          </div>
+        </div>
+      )}
+
       {/* Awareness Message */}
-      <div className="awareness-message">
+      <div style={{ fontSize: "10px" }}>
         <div style={{ 
           background: "rgba(255, 107, 107, 0.1)", 
           border: "1px solid #ff6b6b", 
@@ -225,65 +298,10 @@ export default function ClimateControlPanel({
             <strong style={{ color: "#ff6b6b" }}> Immediate action is needed!</strong>
           </div>
         </div>
-      </div>
+          </div>
 
-      <style jsx>{`
-        .climate-panel {
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          width: 280px;
-          background: rgba(0, 0, 0, 0.85);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 12px;
-          padding: 15px;
-          backdrop-filter: blur(10px);
-          z-index: 1000;
-        }
-        
-        .panel-header {
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          padding-bottom: 10px;
-          margin-bottom: 15px;
-        }
-        
-        .temperature-display {
-          background: rgba(255, 107, 107, 0.1);
-          border: 1px solid rgba(255, 107, 107, 0.3);
-          border-radius: 6px;
-          padding: 8px;
-          margin-bottom: 15px;
-        }
-        
-        .scenario-controls, .year-controls {
-          margin-bottom: 15px;
-        }
-        
-        .projection-display {
-          background: rgba(0, 212, 255, 0.1);
-          border: 1px solid rgba(0, 212, 255, 0.3);
-          border-radius: 6px;
-          padding: 8px;
-          margin-bottom: 15px;
-        }
-        
-        .location-info {
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 6px;
-          padding: 10px;
-          margin-bottom: 15px;
-        }
-        
-        .control-buttons {
-          display: flex;
-          gap: 8px;
-          margin-bottom: 15px;
-        }
-        
-        .awareness-message {
-          font-size: 10px;
-        }
-      `}</style>
+        </div>
+      )}
     </div>
   );
 }

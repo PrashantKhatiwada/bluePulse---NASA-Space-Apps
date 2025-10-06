@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { easeInOut } from "./easing";
-import { lonLatToVec3 } from "./lonlat";
+import { lonLatToVec3Corrected } from "./lonlat";
 
 export function computeFlyPath(
   cameraPos: THREE.Vector3,
@@ -10,7 +10,7 @@ export function computeFlyPath(
   frames = 60
 ) {
   const look = new THREE.Vector3(0, 0, 0);
-  const goal = lonLatToVec3(lon, lat, 1.0).normalize().multiplyScalar(distance);
+  const goal = lonLatToVec3Corrected(lon, lat, 1.0).normalize().multiplyScalar(distance);
   const start = cameraPos.clone();
   const path: THREE.Vector3[] = [];
   for (let i = 0; i < frames; i++) {

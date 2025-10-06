@@ -25,7 +25,7 @@ A stunning, interactive 3D ocean data visualization built with React, Next.js, a
 
 1. **Clone and navigate to the project:**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/PrashantKhatiwada/bluePulse---NASA-Space-Apps.git
    cd bluepulse-3d/web
    ```
 
@@ -221,4 +221,4 @@ If you encounter any issues or have questions, please open an issue on GitHub.
 
 ---
 
-**Made with ❤️ for ocean data visualization**
+**Made for ocean data visualization**
