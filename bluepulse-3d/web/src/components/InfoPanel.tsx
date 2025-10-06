@@ -182,7 +182,7 @@ export default function InfoPanel({ data, tIndex }: InfoPanelProps) {
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                 <div style={{ width: "12px", height: "12px", background: "#FF4000", borderRadius: "50%" }} />
-                <span style={{ fontSize: "12px" }}>Very High (>1.0 mg/m³)</span>
+                <span style={{ fontSize: "12px" }}>Very High (&gt;1.0 mg/m³)</span>
               </div>
             </div>
           </div>
