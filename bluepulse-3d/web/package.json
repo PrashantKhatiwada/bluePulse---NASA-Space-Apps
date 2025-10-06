@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start -p 3000"
+    "start": "next start -p 3000",
+    "audit": "npm audit --audit-level=moderate"
   },
   "dependencies": {
     "@react-three/drei": "^9.88.13",
@@ -23,5 +24,12 @@
     "@types/react-dom": "^18.2.18",
     "@types/three": "^0.158.3",
     "typescript": "^5.3.3"
+  },
+  "overrides": {
+    "three-mesh-bvh": "^0.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   }
 }
