@@ -18,15 +18,15 @@ export default function HUD({
   onToggleAudio,
 }: {
   playing: boolean;
-  setPlaying: (b: boolean) => void;
+  setPlaying: (value: boolean | ((prev: boolean) => boolean)) => void;
   tIndex: number;
   data: any;
   showSeaLevelDots?: boolean;
-  setShowSeaLevelDots?: (show: boolean) => void;
+  setShowSeaLevelDots?: (show: boolean | ((prev: boolean) => boolean)) => void;
   showChlorophyllDots?: boolean;
-  setShowChlorophyllDots?: (show: boolean) => void;
+  setShowChlorophyllDots?: (show: boolean | ((prev: boolean) => boolean)) => void;
   showFloodVisualization?: boolean;
-  setShowFloodVisualization?: (show: boolean) => void;
+  setShowFloodVisualization?: (show: boolean | ((prev: boolean) => boolean)) => void;
   onOpenCharts?: () => void;
   audioEnabled?: boolean;
   onToggleAudio?: () => void;
