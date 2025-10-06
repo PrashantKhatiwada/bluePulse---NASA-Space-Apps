@@ -38,15 +38,14 @@ export default function InfoPanel({ data, tIndex }: InfoPanelProps) {
           onClick={() => setIsOpen(!isOpen)}
           style={{
             padding: "6px 12px",
-            border: "none",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             borderRadius: "15px",
             background: isOpen ? "#00d4ff" : "rgba(0, 0, 0, 0.7)",
             color: "white",
             fontSize: "11px",
             fontWeight: "bold",
             cursor: "pointer",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)"
+            backdropFilter: "blur(10px)"
           }}
         >
           {isOpen ? "📊 Hide Info" : "ℹ️ NASA Data Info"}
