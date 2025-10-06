@@ -1,6 +1,25 @@
 "use client";
 import React, { useState, useMemo } from "react";
 
+// Type definitions for timeline data points
+interface SeaLevelPoint {
+  year: number;
+  rise: number;
+}
+
+interface FloodPoint {
+  year: number;
+  affected: number;
+  regions: number;
+}
+
+interface IcePoint {
+  year: number;
+  melted: number;
+  contribution: number;
+  critical: number;
+}
+
 interface ChartsProps {
   selectedYear: number;
   selectedScenario: number;
@@ -34,10 +53,10 @@ export default function Charts({
   console.log('📊 Charts component rendered:', { isOpen, selectedYear, selectedScenario, seaLevelData: !!seaLevelData });
 
   // Calculate sea level rise over time
-  const seaLevelTimeline = useMemo(() => {
+  const seaLevelTimeline = useMemo((): SeaLevelPoint[] => {
     if (!seaLevelData) return [];
     
-    return seaLevelData.timeline.years.map((year: number, index: number) => {
+    return seaLevelData.timeline.years.map((year: number, index: number): SeaLevelPoint => {
       const rise = seaLevelData.timeline.currentRate.seaLevelRise[index];
       const scenario = seaLevelData.projections.scenarios[selectedScenario];
       return {
@@ -48,7 +67,7 @@ export default function Charts({
   }, [seaLevelData, selectedScenario]);
 
   // Calculate flood impact over time
-  const floodTimeline = useMemo(() => {
+  const floodTimeline = useMemo((): FloodPoint[] => {
     if (!seaLevelData) return [];
     
     const coastalRegions = [
@@ -64,7 +83,7 @@ export default function Charts({
       { name: "Mumbai", elevation: 3.0, population: 20000000 }
     ];
 
-    return seaLevelData.timeline.years.map((year: number, index: number) => {
+    return seaLevelData.timeline.years.map((year: number, index: number): FloodPoint => {
       const seaLevelMeters = (seaLevelData.timeline.currentRate.seaLevelRise[index] * 
         seaLevelData.projections.scenarios[selectedScenario].seaLevelRiseMultiplier) / 1000;
       
@@ -88,7 +107,7 @@ export default function Charts({
   }, [seaLevelData, selectedScenario]);
 
   // Calculate ice melt over time
-  const iceTimeline = useMemo(() => {
+  const iceTimeline = useMemo((): IcePoint[] => {
     if (!seaLevelData) return [];
     
     const iceRegions = [
@@ -100,7 +119,7 @@ export default function Charts({
       { name: "Patagonian Ice", meltRate: 2.0, seaLevelContribution: 0.03 }
     ];
 
-    return seaLevelData.timeline.years.map((year: number) => {
+    return seaLevelData.timeline.years.map((year: number): IcePoint => {
       const yearsPassed = year - 2024;
       const scenarioMultiplier = 1 + (selectedScenario * 0.5);
       
@@ -141,8 +160,8 @@ export default function Charts({
           <div>
             <h4 style={{ color: '#00d4ff', marginBottom: '10px' }}>Sea Level Rise Over Time</h4>
             <div style={{ height: '200px', display: 'flex', alignItems: 'end', gap: '4px' }}>
-              {seaLevelTimeline.map((point, index) => {
-                const height = (point.rise / Math.max(...seaLevelTimeline.map(p => p.rise))) * 180;
+              {seaLevelTimeline.map((point: SeaLevelPoint, index: number) => {
+                const height = (point.rise / Math.max(...seaLevelTimeline.map((p: SeaLevelPoint) => p.rise))) * 180;
                 const isCurrent = point.year === selectedYear;
                 return (
                   <div key={point.year} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -173,8 +192,8 @@ export default function Charts({
           <div>
             <h4 style={{ color: '#ff6600', marginBottom: '10px' }}>Coastal Flooding Impact</h4>
             <div style={{ height: '200px', display: 'flex', alignItems: 'end', gap: '4px' }}>
-              {floodTimeline.map((point, index) => {
-                const maxAffected = Math.max(...floodTimeline.map(p => p.affected));
+              {floodTimeline.map((point: FloodPoint, index: number) => {
+                const maxAffected = Math.max(...floodTimeline.map((p: FloodPoint) => p.affected));
                 const height = maxAffected > 0 ? (point.affected / maxAffected) * 180 : 0;
                 const isCurrent = point.year === selectedYear;
                 return (
@@ -206,7 +225,7 @@ export default function Charts({
           <div>
             <h4 style={{ color: '#ffffff', marginBottom: '10px' }}>Ice Sheet Melting</h4>
             <div style={{ height: '200px', display: 'flex', alignItems: 'end', gap: '4px' }}>
-              {iceTimeline.map((point, index) => {
+              {iceTimeline.map((point: IcePoint, index: number) => {
                 const height = (point.melted / 100) * 180;
                 const isCurrent = point.year === selectedYear;
                 return (
@@ -318,21 +337,21 @@ export default function Charts({
               marginBottom: "20px",
               paddingRight: "50px"
             }}>
-                  <h2 style={{ 
-                    color: "#00d4ff", 
-                    margin: "0 0 10px 0", 
-                    fontSize: "24px",
-                    fontWeight: "bold"
-                  }}>
-                    🛰️ NASA Climate Impact Analytics
-                  </h2>
-                  <p style={{ 
-                    color: "#ccc", 
-                    margin: 0, 
-                    fontSize: "14px" 
-                  }}>
-                    Official NASA JPL & Ocean Color Web data analysis
-                  </p>
+              <h2 style={{ 
+                color: "#00d4ff", 
+                margin: "0 0 10px 0", 
+                fontSize: "24px",
+                fontWeight: "bold"
+              }}>
+                📊 Climate Impact Analytics
+              </h2>
+              <p style={{ 
+                color: "#ccc", 
+                margin: 0, 
+                fontSize: "14px" 
+              }}>
+                Interactive charts showing climate impacts over time
+              </p>
             </div>
 
             {/* Chart Type Buttons */}
