@@ -33,7 +33,6 @@ function RotatingEarth({
   showSeaLevelDots: boolean;
   showChlorophyllDots: boolean;
   showFloodVisualization: boolean;
-  showFloodVisualization: boolean;
   playing: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -174,7 +173,6 @@ export default function GlobeCanvas({
   showSeaLevelDots: boolean;
   showChlorophyllDots: boolean;
   showFloodVisualization: boolean;
-  showFloodVisualization: boolean;
   playing: boolean;
 }) {
   return (
@@ -190,7 +188,6 @@ export default function GlobeCanvas({
         onLocationClick={onLocationClick}
         showSeaLevelDots={showSeaLevelDots}
         showChlorophyllDots={showChlorophyllDots}
-        showFloodVisualization={showFloodVisualization}
         showFloodVisualization={showFloodVisualization}
         playing={playing}
       />
