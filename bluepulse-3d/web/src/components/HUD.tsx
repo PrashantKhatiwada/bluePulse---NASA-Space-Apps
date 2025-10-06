@@ -219,7 +219,7 @@ export default function HUD({
           }}
           style={{
             padding: "12px 20px",
-            border: "none",
+            border: "2px solid rgba(255, 255, 255, 0.2)",
             borderRadius: "25px",
             background: "linear-gradient(135deg, #00d4ff, #0099cc)",
             color: "white",
@@ -227,8 +227,7 @@ export default function HUD({
             fontWeight: "bold",
             cursor: "pointer",
             boxShadow: "0 4px 15px rgba(0, 212, 255, 0.3)",
-            transition: "all 0.3s ease",
-            border: "2px solid rgba(255, 255, 255, 0.2)"
+            transition: "all 0.3s ease"
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.transform = "translateY(-2px)";
